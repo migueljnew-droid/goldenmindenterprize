@@ -74,7 +74,7 @@ export default function TechnologySection() {
 
   return (
     <section id="technology" ref={sectionRef} className="relative py-32 md:py-44">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(42,74,138,0.08)_0%,transparent_60%)]" />
+      {/* transparent — video shows through */}
 
       <div className="relative z-10 max-w-[1200px] mx-auto px-8 lg:px-12">
         {/* Header */}
@@ -87,7 +87,7 @@ export default function TechnologySection() {
             className="mx-auto mb-8 opacity-40"
           />
           <p
-            className="text-[0.65rem] tracking-[0.6em] uppercase text-[#c9a227]/70 mb-5"
+            className="text-[0.65rem] tracking-[0.6em] uppercase text-[#e8c547] mb-5"
             style={{ fontFamily: "var(--font-cinzel), Cinzel, serif" }}
           >
             Technology
@@ -99,7 +99,7 @@ export default function TechnologySection() {
             <span className="gold-text">The Stack</span>{" "}
             <span className="text-[#f0ead6]">That Powers Everything</span>
           </h2>
-          <p className="text-[#8a99b8] max-w-2xl mx-auto text-base md:text-lg leading-[1.8]">
+          <p className="text-[#d0d8e8] max-w-2xl mx-auto text-base md:text-lg leading-[1.8]">
             Five interlocking layers of technology — from bare-metal Rust
             to high-level AI orchestration — engineered for performance,
             autonomy, and resilience.
@@ -130,7 +130,7 @@ export default function TechnologySection() {
                 >
                   {layer.name}
                 </h3>
-                <p className="text-[#8a99b8] text-sm leading-[1.8]">
+                <p className="text-[#d0d8e8] text-sm leading-[1.8]">
                   {layer.desc}
                 </p>
               </div>
@@ -141,7 +141,7 @@ export default function TechnologySection() {
         {/* Architecture diagram */}
         <div className="arch-diagram card gold-border-bright p-8 md:p-12">
           <p
-            className="text-center text-[0.6rem] tracking-[0.5em] uppercase text-[#c9a227]/50 mb-10"
+            className="text-center text-[0.6rem] tracking-[0.5em] uppercase text-[#e8c547] mb-10"
             style={{ fontFamily: "var(--font-cinzel), Cinzel, serif" }}
           >
             System Architecture

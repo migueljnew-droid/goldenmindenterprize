@@ -1,35 +1,23 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════════
-   GOLDEN MIND ENTERPRIZE — Design Tokens
-   Colors extracted from logo: Gold + Navy + Cosmic
+   GOLDEN MIND ENTERPRIZE — $10K Design Tokens
    ═══════════════════════════════════════════════════════ */
 
 :root {
-  /* Gold spectrum — from logo */
   --gold-lightest: #f5e6a3;
   --gold-light: #e8c547;
   --gold: #c9a227;
   --gold-deep: #a67c00;
   --gold-dark: #7a5c00;
-
-  /* Navy spectrum — from shield interior */
   --navy-deepest: #050a18;
   --navy-deep: #0a1628;
   --navy: #0d1b3a;
   --navy-mid: #142850;
   --navy-light: #1e3a6e;
-
-  /* Cosmic accent */
   --cosmic-blue: #2a4a8a;
   --star-white: #f0ead6;
-  --star-bright: #fffbe6;
-
-  /* Semantic */
   --bg-primary: #050a18;
-  --bg-section: #0a1628;
-  --bg-card: #0d1b3a;
-  --bg-card-hover: #142850;
   --text-primary: #f0ead6;
   --text-secondary: #8a99b8;
   --text-muted: #5a6a88;
@@ -42,22 +30,10 @@
   --font-body: var(--font-jost);
 }
 
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--gold-dark) var(--navy-deepest);
-}
-
-html {
-  scroll-behavior: auto; /* Lenis handles smooth scroll */
-}
-
-html.lenis, html.lenis body {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
+* { scrollbar-width: thin; scrollbar-color: var(--gold-dark) var(--navy-deepest); }
+html { scroll-behavior: auto; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
 
 body {
   background: var(--bg-primary);
@@ -67,34 +43,32 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════
-   GOLD TEXT — Metallic gradient from logo colors
+   FILM GRAIN OVERLAY — Adds texture/depth
+   ═══════════════════════════════════════════════════════ */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   GOLD TEXT
    ═══════════════════════════════════════════════════════ */
 .gold-text {
-  background: linear-gradient(
-    135deg,
-    #f5e6a3 0%,
-    #e8c547 20%,
-    #c9a227 40%,
-    #a67c00 55%,
-    #c9a227 70%,
-    #e8c547 85%,
-    #f5e6a3 100%
-  );
+  background: linear-gradient(135deg, #f5e6a3 0%, #e8c547 20%, #c9a227 40%, #a67c00 55%, #c9a227 70%, #e8c547 85%, #f5e6a3 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gold-text-shimmer {
-  background: linear-gradient(
-    90deg,
-    #a67c00 0%,
-    #e8c547 20%,
-    #f5e6a3 40%,
-    #e8c547 60%,
-    #c9a227 80%,
-    #a67c00 100%
-  );
+  background: linear-gradient(90deg, #a67c00 0%, #e8c547 20%, #f5e6a3 40%, #e8c547 60%, #c9a227 80%, #a67c00 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -108,34 +82,8 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════
-   GOLD BORDERS — Matching shield edge from logo
+   BACKGROUNDS
    ═══════════════════════════════════════════════════════ */
-.gold-border {
-  position: relative;
-  border: 1px solid rgba(201, 162, 39, 0.2);
-}
-
-.gold-border-bright {
-  position: relative;
-  border: 1px solid rgba(201, 162, 39, 0.35);
-}
-
-.gold-border-glow {
-  position: relative;
-  border: 1px solid rgba(201, 162, 39, 0.3);
-  box-shadow:
-    0 0 15px rgba(201, 162, 39, 0.06),
-    0 0 45px rgba(201, 162, 39, 0.03),
-    inset 0 1px 0 rgba(201, 162, 39, 0.1);
-}
-
-/* ═══════════════════════════════════════════════════════
-   NAVY GRADIENT BACKGROUNDS — From shield colors
-   ═══════════════════════════════════════════════════════ */
-.bg-navy-gradient {
-  background: linear-gradient(180deg, #050a18 0%, #0a1628 50%, #0d1b3a 100%);
-}
-
 .bg-navy-radial {
   background:
     radial-gradient(ellipse at 30% 20%, rgba(42, 74, 138, 0.12) 0%, transparent 60%),
@@ -144,111 +92,155 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════
-   SECTION DIVIDER — Gold line
+   DIVIDERS
    ═══════════════════════════════════════════════════════ */
 .divider-gold {
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(201, 162, 39, 0.1) 15%,
-    rgba(201, 162, 39, 0.4) 50%,
-    rgba(201, 162, 39, 0.1) 85%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg, transparent 0%, rgba(201, 162, 39, 0.1) 15%, rgba(201, 162, 39, 0.4) 50%, rgba(201, 162, 39, 0.1) 85%, transparent 100%);
 }
 
 /* ═══════════════════════════════════════════════════════
    CARD SYSTEM
    ═══════════════════════════════════════════════════════ */
 .card {
-  background: linear-gradient(135deg, rgba(13, 27, 58, 0.8) 0%, rgba(10, 22, 40, 0.9) 100%);
-  border: 1px solid rgba(201, 162, 39, 0.12);
+  background: rgba(5, 10, 24, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(201, 162, 39, 0.1);
   border-radius: 1rem;
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .card:hover {
-  border-color: rgba(201, 162, 39, 0.3);
-  box-shadow:
-    0 8px 32px rgba(201, 162, 39, 0.08),
-    0 0 0 1px rgba(201, 162, 39, 0.05);
+  background: rgba(10, 22, 40, 0.85);
+  border-color: rgba(201, 162, 39, 0.25);
+  box-shadow: 0 8px 32px rgba(201, 162, 39, 0.06);
   transform: translateY(-2px);
 }
 
-/* ═══════════════════════════════════════════════════════
-   COSMIC STARS — Background decoration
-   ═══════════════════════════════════════════════════════ */
-@keyframes twinkle-slow {
-  0%, 100% { opacity: 0.15; }
-  50% { opacity: 0.6; }
-}
-
-@keyframes twinkle-med {
-  0%, 100% { opacity: 0.1; }
-  50% { opacity: 0.45; }
-}
-
-@keyframes float-gentle {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-.float-gentle {
-  animation: float-gentle 6s ease-in-out infinite;
+.gold-border-glow {
+  border: 1px solid rgba(201, 162, 39, 0.3);
+  box-shadow: 0 0 15px rgba(201, 162, 39, 0.06), 0 0 45px rgba(201, 162, 39, 0.03), inset 0 1px 0 rgba(201, 162, 39, 0.1);
 }
 
 /* ═══════════════════════════════════════════════════════
-   BUTTON SYSTEM
+   BUTTONS — Fill sweep on hover (Technique 21)
    ═══════════════════════════════════════════════════════ */
 .btn-gold {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.875rem 2.5rem;
-  background: linear-gradient(135deg, #a67c00 0%, #c9a227 40%, #e8c547 100%);
-  color: #050a18;
+  padding: 1rem 2.5rem;
+  background: transparent;
+  color: var(--gold);
   font-family: var(--font-cinzel), 'Cinzel', serif;
   font-weight: 600;
-  font-size: 0.8rem;
-  letter-spacing: 0.15em;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  border: none;
+  border: 1px solid var(--gold);
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  position: relative;
   overflow: hidden;
+  z-index: 1;
+  transition: color 0.4s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-.btn-gold:hover {
-  box-shadow: 0 0 30px rgba(201, 162, 39, 0.3), 0 0 60px rgba(201, 162, 39, 0.1);
-  transform: translateY(-1px);
+.btn-gold::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #a67c00, #c9a227, #e8c547);
+  transform: translateX(-101%);
+  transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+  z-index: -1;
 }
+
+.btn-gold:hover { color: #050a18; }
+.btn-gold:hover::before { transform: translateX(0); }
 
 .btn-outline {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.875rem 2.5rem;
+  padding: 1rem 2.5rem;
   background: transparent;
-  color: var(--gold);
+  color: var(--text-secondary);
   font-family: var(--font-cinzel), 'Cinzel', serif;
   font-weight: 500;
-  font-size: 0.8rem;
-  letter-spacing: 0.15em;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  border: 1px solid rgba(201, 162, 39, 0.35);
+  border: 1px solid rgba(201, 162, 39, 0.2);
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 0.4s ease;
 }
 
 .btn-outline:hover {
-  background: rgba(201, 162, 39, 0.08);
-  border-color: rgba(201, 162, 39, 0.6);
+  color: var(--gold);
+  border-color: rgba(201, 162, 39, 0.5);
+  background: rgba(201, 162, 39, 0.05);
 }
 
 /* ═══════════════════════════════════════════════════════
-   PREFERS REDUCED MOTION
+   MARQUEE — Infinite scroll text (Technique 13)
+   ═══════════════════════════════════════════════════════ */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* ═══════════════════════════════════════════════════════
+   HORIZONTAL SCROLL (Technique 5)
+   ═══════════════════════════════════════════════════════ */
+.horizontal-wrapper { overflow: hidden; }
+.horizontal-track { display: flex; width: max-content; }
+.h-panel {
+  width: 80vw;
+  max-width: 600px;
+  height: auto;
+  flex-shrink: 0;
+  padding: 0 1.5rem;
+}
+
+/* ═══════════════════════════════════════════════════════
+   TEXT SPLIT ANIMATION SUPPORT
+   ═══════════════════════════════════════════════════════ */
+.line-mask {
+  overflow: hidden;
+  display: block;
+}
+
+.line-mask > div,
+.line-mask > span {
+  display: block;
+}
+
+/* ═══════════════════════════════════════════════════════
+   FLOATING ANIMATION
+   ═══════════════════════════════════════════════════════ */
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.float-gentle { animation: float-gentle 6s ease-in-out infinite; }
+
+/* ═══════════════════════════════════════════════════════
+   REDUCED MOTION
    ═══════════════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -257,4 +249,6 @@ body {
     transition-duration: 0.01ms !important;
   }
   .float-gentle { animation: none; }
+  .marquee-track { animation: none; }
+  body::after { display: none; }
 }

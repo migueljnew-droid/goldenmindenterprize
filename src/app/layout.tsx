@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     "technology holding company",
     "AI",
     "innovation",
-    "Louis Gold",
+    "Miguel Jiminez",
     "software",
     "enterprise",
   ],

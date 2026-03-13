@@ -27,7 +27,7 @@ export default function ContactSection() {
 
   return (
     <section id="contact" ref={sectionRef} className="relative py-32 md:py-44">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(201,162,39,0.03)_0%,transparent_50%)]" />
+      {/* transparent — video shows through */}
 
       <div className="relative z-10 max-w-[900px] mx-auto px-8 lg:px-12 text-center contact-content">
         {/* Large shield logo */}
@@ -39,10 +39,9 @@ export default function ContactSection() {
           className="mx-auto mb-12 drop-shadow-[0_0_40px_rgba(201,162,39,0.2)] w-[180px] h-[180px] md:w-[260px] md:h-[260px]"
         />
 
-        <div className="divider-gold mb-12" />
 
         <p
-          className="text-[0.65rem] tracking-[0.6em] uppercase text-[#c9a227]/70 mb-5"
+          className="text-[0.65rem] tracking-[0.6em] uppercase text-[#e8c547] mb-5"
           style={{ fontFamily: "var(--font-cinzel), Cinzel, serif" }}
         >
           Connect
@@ -54,7 +53,7 @@ export default function ContactSection() {
           <span className="gold-text">Let&apos;s Build</span>{" "}
           <span className="text-[#f0ead6]">the Future</span>
         </h2>
-        <p className="text-[#8a99b8] max-w-xl mx-auto text-base md:text-lg leading-[1.8] mb-12">
+        <p className="text-[#d0d8e8] max-w-xl mx-auto text-base md:text-lg leading-[1.8] mb-12">
           Golden Mind Enterprize is always open to visionary partnerships,
           investment inquiries, and technology collaborations that push
           boundaries.
@@ -67,7 +66,6 @@ export default function ContactSection() {
         </div>
 
         {/* Footer */}
-        <div className="divider-gold mb-10" />
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4">
             <Image
@@ -78,13 +76,13 @@ export default function ContactSection() {
               className="opacity-40"
             />
             <span
-              className="text-[0.65rem] tracking-[0.3em] uppercase text-[#5a6a88]"
+              className="text-[0.65rem] tracking-[0.3em] uppercase text-[#d0d8e8]"
               style={{ fontFamily: "var(--font-cinzel), Cinzel, serif" }}
             >
               Golden Mind Enterprize LLC
             </span>
           </div>
-          <p className="text-[0.7rem] text-[#5a6a88]/60">
+          <p className="text-[0.7rem] text-[#d0d8e8]">
             &copy; {new Date().getFullYear()} Golden Mind Enterprize LLC. All
             rights reserved.
           </p>

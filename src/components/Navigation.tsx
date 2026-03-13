@@ -48,7 +48,7 @@ export default function Navigation() {
                 Golden Mind
               </span>
               <span
-                className="text-[0.55rem] tracking-[0.5em] uppercase text-[#8a99b8]"
+                className="text-[0.55rem] tracking-[0.5em] uppercase text-[#d0d8e8]"
                 style={{ fontFamily: "var(--font-cinzel), Cinzel, serif" }}
               >
                 Enterprize
@@ -62,7 +62,7 @@ export default function Navigation() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-[0.7rem] tracking-[0.25em] uppercase text-[#8a99b8] hover:text-[#e8c547] transition-colors duration-300 cursor-pointer"
+                className="text-[0.7rem] tracking-[0.25em] uppercase text-[#d0d8e8] hover:text-[#e8c547] transition-colors duration-300 cursor-pointer"
                 style={{ fontFamily: "var(--font-cinzel), Cinzel, serif" }}
               >
                 {link.label}
@@ -104,7 +104,7 @@ export default function Navigation() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="text-[0.75rem] tracking-[0.3em] uppercase text-[#8a99b8] hover:text-[#e8c547] transition-colors py-2 cursor-pointer"
+                className="text-[0.75rem] tracking-[0.3em] uppercase text-[#d0d8e8] hover:text-[#e8c547] transition-colors py-2 cursor-pointer"
                 style={{ fontFamily: "var(--font-cinzel), Cinzel, serif" }}
               >
                 {link.label}

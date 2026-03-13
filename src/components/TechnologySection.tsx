@@ -148,7 +148,7 @@ export default function TechnologySection() {
           </p>
           <div className="flex flex-col items-center gap-3 font-mono text-[0.75rem] md:text-sm">
             {[
-              { label: "Applications — Aligned / Omni / NeoBrain / FathersCAN / LANCE", w: "max-w-2xl", op: "0.9" },
+              { label: "Applications — Aligned / Omni / NeoBrain / LANCE / SPEAR", w: "max-w-2xl", op: "0.9" },
               { label: "Mercury Studio — Rust DAW + Tauri UI", w: "max-w-xl", op: "0.75" },
               { label: "Content Engine — Imagen 4 / Veo 3.1 / Vertex AI", w: "max-w-md", op: "0.6" },
               { label: "Council Cloud — grandcouncil.cloud — 24/7", w: "max-w-sm", op: "0.5" },

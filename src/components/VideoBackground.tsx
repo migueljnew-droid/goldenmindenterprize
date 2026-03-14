@@ -12,16 +12,27 @@ export default function VideoBackground() {
     const container = containerRef.current;
     if (!video || !container) return;
 
-    const onCanPlay = () => setLoaded(true);
-    video.addEventListener("canplaythrough", onCanPlay);
+    // Multiple events — mobile may only fire some of these
+    const markLoaded = () => setLoaded(true);
+    video.addEventListener("canplaythrough", markLoaded);
+    video.addEventListener("playing", markLoaded);
+    video.addEventListener("loadeddata", markLoaded);
 
-    // Try to play immediately (covers mobile autoplay)
+    // Force show after 3s even if events don't fire
+    const timeout = setTimeout(markLoaded, 3000);
+
+    // Try to play immediately
     video.play().catch(() => {});
 
     // Mobile: just let autoplay handle it, no scroll scrubbing
     const isMobile = window.innerWidth < 768 || "ontouchstart" in window;
     if (isMobile) {
-      return () => video.removeEventListener("canplaythrough", onCanPlay);
+      return () => {
+        clearTimeout(timeout);
+        video.removeEventListener("canplaythrough", markLoaded);
+        video.removeEventListener("playing", markLoaded);
+        video.removeEventListener("loadeddata", markLoaded);
+      };
     }
 
     // === DESKTOP ONLY: scroll-driven playback + camera ===
@@ -104,7 +115,10 @@ export default function VideoBackground() {
     rafId = requestAnimationFrame(animate);
 
     return () => {
-      video.removeEventListener("canplaythrough", onCanPlay);
+      clearTimeout(timeout);
+      video.removeEventListener("canplaythrough", markLoaded);
+      video.removeEventListener("playing", markLoaded);
+      video.removeEventListener("loadeddata", markLoaded);
       window.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(rafId);
     };

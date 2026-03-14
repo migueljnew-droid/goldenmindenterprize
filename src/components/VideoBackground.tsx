@@ -1,47 +1,30 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function VideoBackground() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [loaded, setLoaded] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Detect mobile on mount
-  useEffect(() => {
-    const mobile = window.innerWidth < 768 || "ontouchstart" in window;
-    setIsMobile(mobile);
-  }, []);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    const onCanPlay = () => setLoaded(true);
-    video.addEventListener("canplaythrough", onCanPlay);
-
-    // On mobile: just let it autoplay normally
-    if (isMobile) {
-      video.play().catch(() => {
-        // Autoplay blocked — fallback gradient stays visible
-      });
-    }
-
-    return () => video.removeEventListener("canplaythrough", onCanPlay);
-  }, [isMobile]);
-
-  // Desktop: scroll-driven playback + camera movement
-  useEffect(() => {
-    if (isMobile) return; // Skip scroll-driven logic on mobile
-
     const video = videoRef.current;
     const container = containerRef.current;
     if (!video || !container) return;
 
+    const onCanPlay = () => setLoaded(true);
+    video.addEventListener("canplaythrough", onCanPlay);
+
+    // Try to play immediately (covers mobile autoplay)
+    video.play().catch(() => {});
+
+    // Mobile: just let autoplay handle it, no scroll scrubbing
+    const isMobile = window.innerWidth < 768 || "ontouchstart" in window;
+    if (isMobile) {
+      return () => video.removeEventListener("canplaythrough", onCanPlay);
+    }
+
+    // === DESKTOP ONLY: scroll-driven playback + camera ===
     video.pause();
 
     let lastScrollY = 0;
@@ -121,10 +104,11 @@ export default function VideoBackground() {
     rafId = requestAnimationFrame(animate);
 
     return () => {
+      video.removeEventListener("canplaythrough", onCanPlay);
       window.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(rafId);
     };
-  }, [isMobile]);
+  }, []);
 
   return (
     <div className="fixed inset-0 z-0" style={{ pointerEvents: "none" }}>
@@ -133,17 +117,17 @@ export default function VideoBackground() {
         className="absolute inset-0 will-change-transform"
         style={{ transformOrigin: "center center" }}
       >
-        {/* Fallback gradient — always visible on mobile if video fails */}
+        {/* Fallback gradient */}
         <div
           className={`absolute inset-0 bg-navy-radial transition-opacity duration-[2000ms] ${
             loaded ? "opacity-0" : "opacity-100"
           }`}
         />
 
-        {/* Video — autoplay on mobile, scroll-driven on desktop */}
+        {/* Video — always has autoplay/muted/playsInline for mobile compat */}
         <video
           ref={videoRef}
-          autoPlay={isMobile}
+          autoPlay
           muted
           loop
           playsInline

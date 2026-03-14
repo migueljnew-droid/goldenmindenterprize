@@ -6,31 +6,42 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/**
- * Scroll-driven cinematic video background.
- * - Video playback speed is controlled by scroll velocity
- * - Camera zooms into different focal points per section
- * - Slow ambient drift when idle, accelerates on scroll
- */
 export default function VideoBackground() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [loaded, setLoaded] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile on mount
+  useEffect(() => {
+    const mobile = window.innerWidth < 768 || "ontouchstart" in window;
+    setIsMobile(mobile);
+  }, []);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
     const onCanPlay = () => setLoaded(true);
     video.addEventListener("canplaythrough", onCanPlay);
-    return () => video.removeEventListener("canplaythrough", onCanPlay);
-  }, []);
 
+    // On mobile: just let it autoplay normally
+    if (isMobile) {
+      video.play().catch(() => {
+        // Autoplay blocked — fallback gradient stays visible
+      });
+    }
+
+    return () => video.removeEventListener("canplaythrough", onCanPlay);
+  }, [isMobile]);
+
+  // Desktop: scroll-driven playback + camera movement
   useEffect(() => {
+    if (isMobile) return; // Skip scroll-driven logic on mobile
+
     const video = videoRef.current;
     const container = containerRef.current;
     if (!video || !container) return;
 
-    // Pause native playback — we control it manually
     video.pause();
 
     let lastScrollY = 0;
@@ -44,19 +55,16 @@ export default function VideoBackground() {
     let currentY = 0;
     let rafId: number;
 
-    // Section-based focal points (zoom + pan targets)
-    // As scroll progresses 0→1 through the page, camera shifts
     const keyframes = [
-      { scroll: 0,    scale: 1,    x: 0,   y: 0   },  // Hero — wide shot
-      { scroll: 0.15, scale: 1.1,  x: -2,  y: -1  },  // Marquee/About — slight push in
-      { scroll: 0.35, scale: 1.25, x: 3,   y: -3  },  // About — pan right
-      { scroll: 0.55, scale: 1.35, x: -3,  y: -2  },  // Portfolio — pan left, deeper
-      { scroll: 0.75, scale: 1.45, x: 2,   y: -4  },  // Technology — push in more
-      { scroll: 1,    scale: 1.55, x: 0,   y: -5  },  // Contact — deepest zoom
+      { scroll: 0,    scale: 1,    x: 0,   y: 0   },
+      { scroll: 0.15, scale: 1.1,  x: -2,  y: -1  },
+      { scroll: 0.35, scale: 1.25, x: 3,   y: -3  },
+      { scroll: 0.55, scale: 1.35, x: -3,  y: -2  },
+      { scroll: 0.75, scale: 1.45, x: 2,   y: -4  },
+      { scroll: 1,    scale: 1.55, x: 0,   y: -5  },
     ];
 
     function getInterpolated(progress: number) {
-      // Find the two keyframes we're between
       let i = 0;
       for (; i < keyframes.length - 1; i++) {
         if (progress <= keyframes[i + 1].scroll) break;
@@ -65,9 +73,7 @@ export default function VideoBackground() {
       const b = keyframes[Math.min(i + 1, keyframes.length - 1)];
       const range = b.scroll - a.scroll;
       const t = range > 0 ? (progress - a.scroll) / range : 0;
-      // Smooth easing
-      const ease = t * t * (3 - 2 * t); // smoothstep
-
+      const ease = t * t * (3 - 2 * t);
       return {
         scale: a.scale + (b.scale - a.scale) * ease,
         x: a.x + (b.x - a.x) * ease,
@@ -79,12 +85,8 @@ export default function VideoBackground() {
       const scrollY = window.scrollY;
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       const progress = Math.min(scrollY / maxScroll, 1);
-
-      // Scroll velocity for video speed
       scrollVelocity = Math.abs(scrollY - lastScrollY);
       lastScrollY = scrollY;
-
-      // Get camera position from keyframes
       const kf = getInterpolated(progress);
       targetScale = kf.scale;
       targetX = kf.x;
@@ -94,12 +96,10 @@ export default function VideoBackground() {
     function animate() {
       if (!video || !container) return;
 
-      // Advance video time — always forward
       const speedBoost = Math.min(scrollVelocity * 0.15, 5);
       const playSpeed = 0.5 + speedBoost;
       currentTime += playSpeed / 60;
 
-      // Seamless loop — just wrap around
       if (video.duration && currentTime >= video.duration) {
         currentTime = currentTime - video.duration;
       }
@@ -108,16 +108,12 @@ export default function VideoBackground() {
         video.currentTime = currentTime % video.duration;
       }
 
-      // Smooth lerp camera to target
       currentScale += (targetScale - currentScale) * 0.04;
       currentX += (targetX - currentX) * 0.04;
       currentY += (targetY - currentY) * 0.04;
-
       container.style.transform = `scale(${currentScale}) translate(${currentX}%, ${currentY}%)`;
 
-      // Decay velocity
       scrollVelocity *= 0.9;
-
       rafId = requestAnimationFrame(animate);
     }
 
@@ -128,7 +124,7 @@ export default function VideoBackground() {
       window.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(rafId);
     };
-  }, []);
+  }, [isMobile]);
 
   return (
     <div className="fixed inset-0 z-0" style={{ pointerEvents: "none" }}>
@@ -137,16 +133,17 @@ export default function VideoBackground() {
         className="absolute inset-0 will-change-transform"
         style={{ transformOrigin: "center center" }}
       >
-        {/* Fallback gradient */}
+        {/* Fallback gradient — always visible on mobile if video fails */}
         <div
           className={`absolute inset-0 bg-navy-radial transition-opacity duration-[2000ms] ${
             loaded ? "opacity-0" : "opacity-100"
           }`}
         />
 
-        {/* Scroll-driven video */}
+        {/* Video — autoplay on mobile, scroll-driven on desktop */}
         <video
           ref={videoRef}
+          autoPlay={isMobile}
           muted
           loop
           playsInline
@@ -159,7 +156,7 @@ export default function VideoBackground() {
         </video>
       </div>
 
-      {/* Dark overlay for readability */}
+      {/* Dark overlay */}
       <div className="absolute inset-0 bg-[rgba(5,10,24,0.45)]" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_15%,rgba(5,10,24,0.85)_100%)]" />
     </div>

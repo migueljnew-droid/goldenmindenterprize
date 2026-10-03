@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Golden Mind Enterprize
 
-## Getting Started
+The corporate portfolio site for [goldenmindenterprize.com](https://goldenmindenterprize.com), built with the Next.js App Router.
 
-First, run the development server:
+## Local development and verification
 
-```bash
+```sh
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Before deploying, run `npm run lint`, `npm run build`, and `npm audit --omit=dev`. Use `npm run start` to inspect the production build. Verify desktop and 320px/390px mobile layouts, menu keyboard operation, app links, background play/pause, and copy-email behavior in a browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Content and assets
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `src/data/products.ts` holds the portfolio. BioPoint and Omni have verified public websites and App Store destinations (checked October 3, 2026). Other projects are informational; lack of a URL is not a release-status claim.
+- Existing company and product logos are preserved. BioPoint's icon and fasting preview come from the BioPoint project's release assets. Omni's preview is the image published on its App Store listing, asset `01-hero-1320x2868.png`.
+- The cosmic background is still by default. Its smaller video is requested only after a visitor selects Play. Reduced-motion preferences prevent playback; switching tabs pauses it. The original source video remains preserved in `public/video`.
+- Contact offers the existing public mailbox, copy, and Gmail compose. There is no form submission service or claim that a message was sent.
+- Canonical metadata, Organization JSON-LD, `robots.txt`, and `sitemap.xml` are defined in `src/app`. Metadata uses the original logo's actual image dimensions.
 
-## Learn More
+## Deployment
 
-To learn more about Next.js, take a look at the following resources:
+The repository is linked to the existing Vercel project `goldenmindenterprize`. Deploy a production candidate with `vercel deploy --prod --skip-domain`, inspect it with authenticated Vercel tooling, then use `vercel promote <deployment-url>` after checks. Keep credentials in the configured secret store, never in this repository.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The Vercel project owns both `goldenmindenterprize.com` and `www.goldenmindenterprize.com`; `www` redirects to the apex with HTTP 308. `next.config.ts` applies security headers. The CSP permits inline scripts for static App Router hydration; it is not a nonce-based strict CSP.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+`graphify-out/` is a local index and is excluded from deployments.
 
-## Deploy on Vercel
+## Known verification limits (October 3, 2026)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Production dependencies pass npm audit. The full development dependency audit still flags the `braces` chain through Next's ESLint plugin; the suggested force fix would downgrade Next's lint configuration and is not applied.
+- Mail delivery requires a real inbox test; browser checks cover composing and copying only.
+- Manual keyboard and responsive checks are not a full assistive-technology certification.

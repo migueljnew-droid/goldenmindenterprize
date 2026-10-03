@@ -18,9 +18,10 @@ const jost = Jost({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://goldenmindenterprize.com"),
-  title: "Golden Mind Enterprize LLC | Technology & Innovation Holding",
+  title: "Golden Mind Enterprize | Apps, AI & Creative Technology",
   description:
-    "Golden Mind Enterprize LLC — technology holding company powering next-generation applications, AI systems, and creative technology platforms.",
+    "Explore BioPoint and Omni, plus AI infrastructure and creative tools from Golden Mind Enterprize LLC, founded by Miguel Louis Jiminez.",
+  alternates: { canonical: "/" },
   keywords: [
     "Golden Mind Enterprize",
     "technology holding company",
@@ -37,7 +38,7 @@ export const metadata: Metadata = {
     url: "https://goldenmindenterprize.com",
     siteName: "Golden Mind Enterprize",
     type: "website",
-    images: [{ url: "/logos/GMEBLACK.png", width: 1200, height: 630, alt: "Golden Mind Enterprize" }],
+    images: [{ url: "/logos/GMEBLACK.png", width: 1536, height: 1024, alt: "Golden Mind Enterprize" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -55,6 +56,15 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`${cinzel.variable} ${jost.variable} antialiased`}>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Golden Mind Enterprize LLC",
+          url: "https://goldenmindenterprize.com",
+          logo: "https://goldenmindenterprize.com/logos/GMECOINNOBG.png",
+          email: "contact@goldenmindenterprize.com",
+          founder: { "@type": "Person", name: "Miguel Louis Jiminez" },
+        }).replace(/</g, "\\u003c") }} />
         {children}
       </body>
     </html>

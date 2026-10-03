@@ -49,8 +49,8 @@ const products: Product[] = [
     tagline: "Astrology-Powered Dating",
     description:
       "Next-generation dating platform using astrological compatibility and AI-driven matching for meaningful connections.",
-    status: "LIVE",
-    statusColor: "#4ade80",
+    status: "COMING SOON",
+    statusColor: "#e8c547",
     category: "Consumer App",
     tech: ["React Native", "Supabase", "Fly.io"],
     logo: "/logos/apps/aligned.png",

@@ -5,8 +5,8 @@ export const availableApps = [
     name: "BioPoint", category: "Biohacking", tagline: "Your biohacker assistant.",
     description: "Manage your peptides and supplements in one place, with fasting and health logs to support your daily routine.",
     features: ["Peptide management", "Supplement management", "Fasting & health logs"],
-    logo: "/logos/apps/biopoint.png", screenshot: "/products/biopoint-preview.png",
-    screenshotAlt: "BioPoint App Store preview showing fasting routines and progress tracking",
+    logo: "/logos/apps/biopoint.png", screenshot: "/products/biopoint-peptides.png",
+    screenshotAlt: "BioPoint peptide management preview showing stacks, schedules, and reminders",
     website: "https://biopointapp.com", appStore: "https://apps.apple.com/us/app/biopoint/id6761347601",
   },
   {

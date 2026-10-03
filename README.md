@@ -14,7 +14,7 @@ Before deploying, run `npm run lint`, `npm run build`, and `npm audit --omit=dev
 ## Content and assets
 
 - `src/data/products.ts` holds the BioPoint and Omni details. The original wider portfolio remains in `PortfolioSection.tsx`. BioPoint and Omni have verified public websites and App Store destinations (checked October 3, 2026). Other projects are informational; lack of a URL is not a release-status claim.
-- Existing company and product logos are preserved. BioPoint's icon and fasting preview come from the BioPoint project's release assets. Omni's preview is the image published on its App Store listing, asset `01-hero-1320x2868.png`.
+- Existing company and product logos are preserved. BioPoint's icon and peptide-management preview come from the BioPoint project's release assets (`02-build-peptide-stacks.png`). BioPoint is a biohacker assistant centered on peptide and supplement management. Omni's preview is the image published on its App Store listing, asset `01-hero-1320x2868.png`.
 - The original visual design and effects are intentional. Preserve the scroll-driven cosmic video, mobile autoplay, smooth scrolling, floating logo, moving ticker, reveal animations, gradients, spacing, and original page order. Do not redesign or remove effects without explicit approval.
 - The approved BioPoint and Omni cards are in `AvailableApps.tsx`, with styles scoped in `available-apps.css` so they do not change the rest of the site.
 - The original contact presentation and public mailto link are restored. There is no form submission service.
